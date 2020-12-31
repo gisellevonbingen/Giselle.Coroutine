@@ -17,7 +17,7 @@ namespace Giselle.Coroutine
             this.Coroutines = new List<ICoroutine>();
         }
 
-        public Coroutine Start(IEnumerator routine)
+        public ICoroutine Start(IEnumerator routine)
         {
             lock (this.Coroutines)
             {
@@ -28,7 +28,7 @@ namespace Giselle.Coroutine
 
         }
 
-        public Coroutine<T> Start<T>(IEnumerator<CoroutineAction<T>> routine)
+        public ICoroutine<T> Start<T>(IEnumerator<CoroutineAction<T>> routine)
         {
             lock (this.Coroutines)
             {

@@ -55,7 +55,7 @@ namespace Giselle.Coroutine
             return new CoroutineActionCoroutine<T>(routine);
         }
 
-        public static CoroutineAction<T> Enumerator(IEnumerator routine)
+        public new static CoroutineAction<T> Enumerator(IEnumerator routine)
         {
             return new CoroutineActionIEnumerator<T>(routine);
         }

@@ -13,7 +13,7 @@ namespace Giselle.Coroutine.Test
             Console.WriteLine("A");
 
             var r = Program.Manager.Start(Test2());
-            yield return r.WaitForComplete();
+            yield return r;
 
             foreach (var str in r.Results)
             {

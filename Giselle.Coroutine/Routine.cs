@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Giselle.Coroutine
 {
-    public interface IRoutine
+    public abstract class Routine
     {
-        bool MoveNext(double delta);
+        public abstract bool MoveNext(double delta);
     }
 
 }

@@ -17,22 +17,22 @@ namespace Giselle.Coroutine
             this.Coroutines = new List<ICoroutine>();
         }
 
-        public ICoroutine Start(IRoutine routine)
+        public Coroutine Start(IEnumerator routine)
         {
             lock (this.Coroutines)
             {
-                var coroutine = new CoroutineRoutine(routine);
+                var coroutine = new Coroutine(routine);
                 this.Coroutines.Add(coroutine);
                 return coroutine;
             }
 
         }
 
-        public ICoroutine Start(IEnumerator routine)
+        public Coroutine<T> Start<T>(IEnumerator<CoroutineAction<T>> routine)
         {
             lock (this.Coroutines)
             {
-                var coroutine = new CoroutineEnumerator(routine);
+                var coroutine = new Coroutine<T>(routine);
                 this.Coroutines.Add(coroutine);
                 return coroutine;
             }

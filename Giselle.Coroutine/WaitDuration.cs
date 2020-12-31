@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Giselle.Coroutine
 {
-    public class WaitDuration : IRoutine
+    public class WaitDuration : Routine
     {
         public long Millis { get; private set; }
         public double Elapsed { get; private set; }
@@ -17,7 +17,7 @@ namespace Giselle.Coroutine
             this.Elapsed = 0.0D;
         }
 
-        public bool MoveNext(double delta)
+        public override bool MoveNext(double delta)
         {
             this.Elapsed += delta;
             return this.Elapsed < this.Millis;

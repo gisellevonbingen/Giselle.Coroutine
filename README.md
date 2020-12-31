@@ -110,6 +110,7 @@ public static class TestFetchResult
 	{
 		Console.WriteLine("A");
 
+		// Start new coroutine, and wait for complete
 		var r = Program.Manager.Start(Test2());
 		yield return r;
 
@@ -122,28 +123,23 @@ public static class TestFetchResult
 
 		Console.WriteLine("Z");
 	}
-
+	
 	public static IEnumerator<CoroutineAction<string>> Test2()
 	{
 		// Delay 1000ms
 		yield return new WaitDuration(1000);
 		// Coroutine collect 'B' as result values
 		yield return "B";
-		yield return new WaitDuration(1000);
-		yield return "C";
-		yield return new WaitDuration(1000);
-		yield return "D";
-		yield return new WaitDuration(1000);
-		yield return "E";
-		yield return new WaitDuration(1000);
-		yield return Test3().ToAction<string>();
+		yield return CoroutineAction.Result("C");
+		yield return CoroutineAction.Result("D", "E");
+		yield return Test3().ToAction();
 	}
 
 	public static IEnumerator<CoroutineAction<string>> Test3()
 	{
 		yield return "F";
 	}
-
+	
 }
 ```
 Will print like below
@@ -166,6 +162,7 @@ public static class TestFetchResult
 	{
 		Console.WriteLine("A");
 
+		// Start new coroutine, and wait for complete
 		var r = Program.Manager.Start(Test2());
 		yield return r;
 
@@ -193,6 +190,7 @@ public static class TestFetchResult
 		// Delay 1000ms
 		yield return new WaitDuration(1000);
 		// 'F' not collect
+		// use IEnumerator<CoroutineAction<string>> for collect
 		yield return "F";
 	}
 

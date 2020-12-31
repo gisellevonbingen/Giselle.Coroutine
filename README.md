@@ -110,7 +110,7 @@ public static class TestFetchResult
 	{
 		Console.WriteLine("A");
 
-		// Start new coroutine
+		// Start new coroutine, and wait for complete
 		var r = Program.Manager.Start(Test2());
 		yield return r;
 
@@ -167,7 +167,7 @@ public static class TestFetchResult
 	{
 		Console.WriteLine("A");
 
-		// Start new coroutine
+		// Start new coroutine, and wait for complete
 		var r = Program.Manager.Start(Test2());
 		yield return r;
 

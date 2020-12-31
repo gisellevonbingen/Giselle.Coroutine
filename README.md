@@ -80,8 +80,8 @@ public static class TestSimple
 
 }
 ```
-```
 Will print at 500ms intervals like below
+```
 === TEST 0 ===
 TEST2 : 0
 === TEST 1 ===
@@ -146,8 +146,8 @@ public static class TestFetchResult
 
 }
 ```
-```
 Will print like below
+```
 A
 B
 C
@@ -197,4 +197,13 @@ public static class TestFetchResult
 	}
 
 }
+```
+Will print like below
+```
+A
+B
+C
+D
+E
+Z
 ```

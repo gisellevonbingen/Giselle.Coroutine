@@ -195,6 +195,7 @@ public static class TestFetchResult
 		// Delay 1000ms
 		yield return new WaitDuration(1000);
 		// 'F' not collect
+		// use IEnumerator<CoroutineAction<string>> for collect
 		yield return "F";
 	}
 

@@ -21,6 +21,21 @@ namespace Giselle.Coroutine
     {
         public abstract bool MoveNext(double delta, Coroutine coroutine);
 
+        public static CoroutineAction<T> Result<T>(T value)
+        {
+            return new CoroutineActionResult<T>(value);
+        }
+
+        public static CoroutineAction<T> Result<T>(IEnumerable<T> values)
+        {
+            return new CoroutineActionResult<T>(values);
+        }
+
+        public static CoroutineAction<T> Result<T>(params T[] values)
+        {
+            return new CoroutineActionResult<T>(values);
+        }
+
         public static implicit operator CoroutineAction(Routine routine)
         {
             return new CoroutineActionRoutine(routine);
@@ -40,6 +55,21 @@ namespace Giselle.Coroutine
 
     public abstract class CoroutineAction<T> : CoroutineAction, ICoroutineAction<T>
     {
+        public static CoroutineAction<T> Result(T value)
+        {
+            return new CoroutineActionResult<T>(value);
+        }
+
+        public static CoroutineAction<T> Result(IEnumerable<T> values)
+        {
+            return new CoroutineActionResult<T>(values);
+        }
+
+        public static CoroutineAction<T> Result(params T[] values)
+        {
+            return new CoroutineActionResult<T>(values);
+        }
+
         public static implicit operator CoroutineAction<T>(T value)
         {
             return new CoroutineActionResult<T>(value);
@@ -78,7 +108,7 @@ namespace Giselle.Coroutine
 
         public override bool MoveNext(double delta, Coroutine coroutine)
         {
-            return this.Coroutine.Complete == false;
+            return coroutine.MoveSubroutine(delta, this.Coroutine);
         }
 
     }
@@ -94,7 +124,7 @@ namespace Giselle.Coroutine
 
         public override bool MoveNext(double delta, Coroutine coroutine)
         {
-            return this.Coroutine.Complete == false;
+            return coroutine.MoveSubroutine(delta, this.Coroutine);
         }
 
     }
@@ -110,7 +140,7 @@ namespace Giselle.Coroutine
 
         public override bool MoveNext(double delta, Coroutine coroutine)
         {
-            return this.Routine.MoveNext(delta);
+            return coroutine.MoveSubroutine(delta, this.Routine);
         }
 
     }
@@ -126,7 +156,7 @@ namespace Giselle.Coroutine
 
         public override bool MoveNext(double delta, Coroutine coroutine)
         {
-            return this.Routine.MoveNext(delta);
+            return coroutine.MoveSubroutine(delta, this.Routine);
         }
 
     }
@@ -165,11 +195,21 @@ namespace Giselle.Coroutine
 
     public class CoroutineActionResult<T> : CoroutineAction<T>
     {
-        public T Value { get; private set; }
+        public List<T> Values { get; private set; }
 
-        public CoroutineActionResult(T value)
+        public CoroutineActionResult()
         {
-            this.Value = value;
+            this.Values = new List<T>();
+        }
+
+        public CoroutineActionResult(T value) : this()
+        {
+            this.Values.Add(value);
+        }
+
+        public CoroutineActionResult(IEnumerable<T> values) : this()
+        {
+            this.Values.AddRange(values);
         }
 
         public override bool MoveNext(double delta, Coroutine coroutine)

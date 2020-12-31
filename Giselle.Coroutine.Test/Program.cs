@@ -24,7 +24,7 @@ namespace Giselle.Coroutine.Test
             var timer = new Timer(OnTimerTick);
             timer.Change(new TimeSpan(), TimeSpan.FromMilliseconds(1.0D / Stopwatch.Frequency * 100000000));
 
-            Manager.Start(TestSimple.Test());
+            Manager.Start(TestFetchResult.Test());
 
             Console.ReadLine();
         }

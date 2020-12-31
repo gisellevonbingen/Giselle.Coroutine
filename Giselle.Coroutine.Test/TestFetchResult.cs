@@ -28,14 +28,9 @@ namespace Giselle.Coroutine.Test
         {
             yield return new WaitDuration(1000);
             yield return "B";
-            yield return new WaitDuration(1000);
-            yield return "C";
-            yield return new WaitDuration(1000);
-            yield return "D";
-            yield return new WaitDuration(1000);
-            yield return "E";
-            yield return new WaitDuration(1000);
-            yield return Test3().ToAction<string>();
+            yield return CoroutineAction.Result("C");
+            yield return CoroutineAction.Result("D", "E");
+            yield return Test3().ToAction();
         }
 
         public static IEnumerator<CoroutineAction<string>> Test3()

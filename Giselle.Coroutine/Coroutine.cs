@@ -82,40 +82,22 @@ namespace Giselle.Coroutine
 
         public bool MoveSubroutine(double delta, object current)
         {
-            if (current is CoroutineAction)
+            if (current is CoroutineAction action)
             {
-                var action = (CoroutineAction)current;
                 this.OnAction(action);
-
-                if (action.MoveNext(delta, this) == true)
-                {
-                    return true;
-                }
-
+                return action.MoveNext(delta, this);
             }
-            else if (current is IEnumerator)
+            else if (current is IEnumerator enumerator)
             {
-                if (this.MoveNext(delta, (IEnumerator)current) == true)
-                {
-                    return true;
-                }
-
+                return this.MoveNext(delta, enumerator);
             }
-            else if (current is Routine)
+            else if (current is Routine routine)
             {
-                if (((Routine)current).MoveNext(delta) == true)
-                {
-                    return true;
-                }
-
+                return routine.MoveNext(delta);
             }
-            else if (current is ICoroutine)
+            else if (current is ICoroutine coroutine)
             {
-                if (((ICoroutine)current).Complete == false)
-                {
-                    return true;
-                }
-
+                return coroutine.Complete == false;
             }
 
             return false;
@@ -142,9 +124,9 @@ namespace Giselle.Coroutine
         {
             base.OnAction(action);
 
-            if (action is CoroutineActionResult<T>)
+            if (action is CoroutineActionResult<T> result)
             {
-                this.Results.Add(((CoroutineActionResult<T>)action).Value);
+                this.Results.AddRange(result.Values);
             }
 
         }
